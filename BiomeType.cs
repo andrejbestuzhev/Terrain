@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace TerrainGenerator
 {
-    public enum TerrainType
+    public enum BiomeType
     {
-        Shore,
         Plains,
-        Rivers,
+        Hills,
         Mountains,
-        Hills, 
-        Island
+        River,
+        Forest
     }
 }

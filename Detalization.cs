@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace TerrainGenerator
 {
-    public enum TerrainType
+    public enum Detalization
     {
-        Shore,
-        Plains,
-        Rivers,
-        Mountains,
-        Hills, 
-        Island
+        Low = 1,
+        Medium = 3,
+        Hight = 5,
+        VeryHight = 9
     }
 }

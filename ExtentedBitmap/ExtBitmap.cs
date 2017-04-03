@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
 
-namespace Terrain.ExtentedBitmap
+namespace TerrainGenerator.ExtentedBitmap
 {
     public static class ExtBitmap
     {
