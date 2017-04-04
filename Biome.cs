@@ -88,48 +88,21 @@ namespace TerrainGenerator
             }
         }
 
-        /*public void HeightmapFill(Bitmap bitmap, Graphics graphics)
-        {
-            Color c = Color.FromArgb(0, 0, 0);
-            this.Height /= 2;
-            switch (BiomeType) {
-                case BiomeType.Mountains:
-                    System.Drawing.Drawing2D.PathGradientBrush pgb = new System.Drawing.Drawing2D.PathGradientBrush(Points.ToArray());
-                    pgb.CenterColor = Color.FromArgb(this.Height + 20, this.Height + 20, this.Height + 20);
-                    pgb.CenterPoint = Center;
-
-                    pgb.SurroundColors = new[] {
-                        Color.FromArgb(this.Height,this.Height,this.Height)
-                    };
-                    graphics.FillPolygon(pgb, Points.ToArray());
-                    return;
-                case BiomeType.Lake:
-                    System.Drawing.Drawing2D.PathGradientBrush pgba = new System.Drawing.Drawing2D.PathGradientBrush(Points.ToArray());
-                    pgba.CenterColor = Color.FromArgb(0, 0, 0);
-                    pgba.CenterPoint = Center;
-
-                    pgba.SurroundColors = new[] {
-                        Color.FromArgb(this.Height,this.Height,this.Height)
-                    };
-                    graphics.FillPolygon(pgba, Points.ToArray());
-                    return;
-                default:
-                    c = Color.FromArgb(this.Height, this.Height, this.Height);
-                    break;
-            }
-            SolidBrush b = new SolidBrush(c);
-            graphics.FillPolygon(b, Points.ToArray());
-        }*/
-
         public void PrepareNeightbours(BiomeCollection biomes)
         {
             this.Neightbours = new List<Neightbour>();
             foreach (Biome b in biomes) {
-                if (!b.Points.Equals(this.Points)) {
-                    if (b.isNeightbour(this.Points)) {
-                        this.Neightbours.Add(new Neightbour(new List<Point>(), b));
+                bool found = false;
+                List<Point> ready = new List<Point>();
+                for (int x = 0; x < this.Points.Count; x++) {
+                    for (int y = 0; y < b.Points.Count; y++) {
+                        if (this.Points[x].Equals(b.Points[y])) {
+                            ready.Add(b.Points[y]);
+                            found = true;
+                        }
                     }
                 }
+                if (found && !ready.SequenceEqual(this.Points)) this.Neightbours.Add(new Neightbour(ready, b));
             }
         }
 

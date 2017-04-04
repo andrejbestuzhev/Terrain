@@ -31,35 +31,6 @@ namespace TerrainGenerator
             this.TerrainType = terrainType;
             this.MinDistanceBetweenTriangles = (int)((float)width * 0.05f);
             this.Detalization = Detalization.Low;
-            
-            /*foreach (BiomeType biomeType in Enum.GetValues(typeof(BiomeType))) {
-                using (Bitmap b = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb)) {
-                    using (Graphics g = Graphics.FromImage(b)) {
-                        g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-                        List<Biome> oftype = biomes.Where(o => o.BiomeType == biomeType).ToList();
-                        foreach (Biome s in oftype) {
-                            s.Draw(b, g, true);
-                        }
-                    }
-                    b.Save(biomeType.ToString()+".png");
-                }
-            }
-            Graphics _graphics = Graphics.FromImage(this.HeightmapTexture);*/
-            /*foreach (Biome b in biomes) {
-                b.HeightmapFill(this.HeightmapTexture, _graphics);
-            }*/
-            //_bitmap = _bitmap.ImageBlurFilter(ExtBitmap.BlurType.Mean9x9);//.Save("heightmap.png");
-            //this.HeightmapTexture = ExtentedBitmap.ExtBitmap.ImageBlurFilter(this.HeightmapTexture, ExtentedBitmap.ExtBitmap.BlurType.Mean9x9);
-            /*for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int heightAspect = (int)(SimplexNoise.Generate((float)x / 40f, (float)y / 40f) * 10f);
-                    Color px = this.HeightmapTexture.GetPixel(x, y);
-                    if (heightAspect > 0 && px.R >= 5)
-                        this.HeightmapTexture.SetPixel(x, y, Color.FromArgb(px.R + heightAspect, px.R + heightAspect, px.R + heightAspect));
-                }
-            }*/
-
-            this.HeightmapTexture.Save("test.jpg");
         }
 
         public void SetDetalization(Detalization detalization)
@@ -82,12 +53,8 @@ namespace TerrainGenerator
                     foreach (Biome s in biomes) {
                         s.Draw(b, g, true);
                     }
-                    //List<Biome> oftype = biomes.Where(o => o.BiomeType == biomeType).ToList();
-                    /*foreach (Biome s in oftype) {
-                        s.Draw(b, g, true);
-                    }*/
                 }
-                b.Save("map.png");
+                this.HeightmapTexture = (Bitmap)b.Clone();
             }
         }
 
@@ -140,7 +107,6 @@ namespace TerrainGenerator
             TriangleNet.Tools.Voronoi voronoi = new TriangleNet.Tools.Voronoi(mesh);
             BiomeCollection biomes = new BiomeCollection(this.Width, this.Height);
             foreach (TriangleNet.Tools.VoronoiRegion region in voronoi.Regions) {
-                Console.WriteLine(region.ToString());
                 List<Point> biomePoints = new List<Point>();
                 for (int i = 0; i < region.Vertices.Count; i++) {
                     biomePoints.Add(
@@ -149,13 +115,13 @@ namespace TerrainGenerator
                             (int)region.Vertices.ElementAt(i).Y
                         )
                     );
-                    biomes.Add(new Biome(
-                        biomePoints,
-                        new Point((int)region.Generator.X, (int)region.Generator.Y),
-                        region.Bounded,
-                        this
-                    ));
                 }
+                biomes.Add(new Biome(
+                    biomePoints,
+                    new Point((int)region.Generator.X, (int)region.Generator.Y),
+                    region.Bounded,
+                    this
+                ));
             }
             biomes.PrepareNeightbours();
             biomes.SetBiomeTypes();
