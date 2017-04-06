@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 
@@ -44,20 +43,20 @@ namespace TerrainGenerator
         public void Set()
         {
             switch (BiomeType) {
-                case BiomeType.River:
+                /*case BiomeType.River:
                     Height = 0;
-                    break;
+                    break;*/
                 case BiomeType.Plains:
                     Height = 10;
                     break;
                 case BiomeType.Hills:
-                    Height = 20;
+                    Height = 30;
                     break;
                 case BiomeType.Forest:
-                    Height = 20;
+                    Height = 10;
                     break;
                 case BiomeType.Mountains:
-                    Height = 40;
+                    Height = 80;
                     break;
             }
         }
@@ -65,25 +64,7 @@ namespace TerrainGenerator
         public void Draw(Bitmap bitmap, Graphics graphics, bool fill = true)
         {
             if (fill) {
-                Color c = Color.White;
-                switch (BiomeType) {
-                    case BiomeType.Forest:
-                        c = Color.ForestGreen;
-                        break;
-                    case BiomeType.Plains:
-                        c = Color.Green;
-                        break;
-                    case BiomeType.Hills:
-                        c = Color.LightGreen;
-                        break;
-                    case BiomeType.River:
-                        c = Color.Blue;
-                        break;
-                    case BiomeType.Mountains:
-                        c = Color.Black;
-                        break;
-                }
-                SolidBrush s = new SolidBrush(c);
+                SolidBrush s = new SolidBrush(Color.FromArgb(this.Height, this.Height, this.Height));
                 graphics.FillPolygon(s, Points.ToArray());
             }
         }

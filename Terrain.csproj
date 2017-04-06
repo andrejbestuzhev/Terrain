@@ -64,7 +64,6 @@
     <Compile Include="Neightbour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplexNoise.cs" />
-    <Compile Include="TerrainType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Masks\" />

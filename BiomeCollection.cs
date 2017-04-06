@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 
@@ -18,15 +17,6 @@ namespace TerrainGenerator
         {
             this.Width = width;
             this.Height = height;
-        }
-
-        public static BiomeCollection Fill(List<Biome> biomes, int width, int height)
-        {
-            BiomeCollection bc = new BiomeCollection(width, height);
-            foreach (Biome b in biomes) {
-                bc.Add(b);
-            }
-            return bc;
         }
 
         /// <summary>
@@ -57,6 +47,9 @@ namespace TerrainGenerator
             }
         }
 
+        /// <summary>
+        /// Randomly sets biome types for each biome
+        /// </summary>
         public void SetBiomeTypes()
         {
             SetForest();
